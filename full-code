@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+   <head>
+       <title>ExpenseTracker.lex</title>
+       <head>
+           <meta charset="UTF-8">
+           <meta http-equiv="X-UA-Compatible" content="IE=edge">
+           <meta name="viewport" content="width=device-width, initial-scale=1.0">
+           <title>Expense Tracker</title>
+           <style>
+               body {
+                   background-color: pink;
+                   color: white;
+                   font-family: sans-serif;
+                   font-size: 18px;
+               }
+      
+               .input-section {
+                   margin-bottom: 20px;
+                   padding: 15px;
+                   background-color: #f08080;
+                   border-radius: 5px;
+               }
+      
+               label {
+                   display: inline-block;
+                   width: 80px;
+                   margin-bottom: 5px;
+                   color: white;
+               }
+      
+               input[type="number"],
+               input[type="date"],
+               select {
+                   padding: 8px;
+                   margin-bottom: 10px;
+                   border: 1px solid #000000;
+                   border-radius: 4px;
+                   width: calc(100% - 90px);
+                   box-sizing: border-box;
+               }
+      
+               button {
+                   padding: 10px 15px;
+                   background-color: #dc143c; /* my button */
+                   color: white;
+                   border: none;
+                   border-radius: 4px;
+                   cursor: pointer;
+               }
+      
+               button:hover {
+                   background-color: #b22222;
+               }
+      
+               .expenses-list {
+                   background-color: #ffe4e1;
+                   padding: 15px;
+                   border-radius: 5px;
+               }
+      
+               .expenses-list h2 {
+                   color: #dc143c;
+                   margin-top: 0;
+               }
+      
+               table {
+                   width: 100%;
+                   border-collapse: collapse;
+                   margin-top: 10px;
+                   background-color: white;
+                   color: #333;
+                   border-radius: 5px;
+                 
+               }
+      
+               th, td {
+                   padding: 10px;
+                   text-align: left;
+                   border-bottom: 1px solid #ddd;
+               }
+      
+               th {
+                   background-color: #f08080;
+                   color: white;
+               }
+      
+               tbody tr:nth-child(even) {
+                   background-color: #f9f9f9;
+               }
+           </style>
+       </head>
+       <body>
+           <h1>Expense Tracker</h1>
+           <div class="input-section">
+               <label for="category-select">Category:</label>
+               <select id="category-select">
+                   <option value="Food & Bev">Food & Bev</option>
+                   <option value="Rent">Rent</option>
+                   <option value="Transport">Transport</option>
+                   <option value="Entertainment">Entertainment</option>
+               </select>
+               <label for="amount-input">Amount:</label>
+               <input type="number" id="amount-input">
+               <label for="date-input">Date:</label>
+               <input type="date" id="date-input">
+               <button id="add-btn">Add</button>
+           </div>
+          <div style="text-align: center;">
+           <img src="img/7e6A.gif" alt="Image" height="150" width="200"/>
+          </div>
+         
+           <div class="expenses-list">
+               <h2>Expenses List</h2>
+               <table>
+                   <thead>
+                       <tr>
+                           <th>Category</th>
+                           <th>Amount</th>
+                           <th>Date</th>
+                       </tr>
+                   </thead>
+                   <tbody id="expenses-table-body">
+                       </tbody>
+               </table>
+
+
+           </div>
+      
+           <script>
+               const addBtn = document.getElementById('add-btn');
+               const categorySelect = document.getElementById('category-select');
+               const amountInput = document.getElementById('amount-input');
+               const dateInput = document.getElementById('date-input');
+               const expensesTableBody = document.getElementById('expenses-table-body');
+      
+               let expenses = [];
+      
+               addBtn.addEventListener('click', function() {
+                   const category = categorySelect.value;
+                   const amount = parseFloat(amountInput.value);
+                   const date = dateInput.value;
+      
+                   if (category && !isNaN(amount) && date) {
+                       const newExpense = { category, amount, date };
+                       expenses.push(newExpense);
+                       renderExpenses();
+                       amountInput.value = ''; // Clear the input field after adding
+                       dateInput.value = '';   // Clear the date field
+                   } else {
+                       alert('Please fill in all the fields.');
+                   }
+               });
+      
+               function renderExpenses() {
+                   expensesTableBody.innerHTML = ''; // Clear the table body
+      
+                   expenses.forEach(expense => {
+                       const row = expensesTableBody.insertRow();
+                       const categoryCell = row.insertCell();
+                       const amountCell = row.insertCell();
+                       const dateCell = row.insertCell();
+      
+                       categoryCell.textContent = expense.category;
+                       amountCell.textContent = `$${expense.amount.toFixed(2)}`; // Format amount as currency
+                       dateCell.textContent = expense.date;
+                   });
+               }
+      
+               renderExpenses();
+           </script>
+       </body>
+       </html>
+
+
